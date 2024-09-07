@@ -1,7 +1,11 @@
 from flask_openapi3 import APIBlueprint, Tag
+from flask import request
 
+from logger import logger
 from models import Customer, Car, Session
 from schemas import *
+
+from utils import jwt_decode
 
 
 tag = Tag(
@@ -15,6 +19,8 @@ customer_bp = APIBlueprint(
     abp_tags=[tag],
     doc_ui=True,
 )
+
+security = [{"jwt": []}]
 
 
 @customer_bp.get("/customers", responses={"200": CustomerResponseSchema})
@@ -68,25 +74,42 @@ def get_customer_by_id(path: IdPathSchema):
     return {"message": f"Customer of ID {customer_id} not found."}, 404
 
 
-@customer_bp.post("/customers", responses={"200": MessageSchema})
+@customer_bp.post("/customers", responses={"200": MessageSchema}, security=security)
 def add_customer(body: CustomerBodySchema):
     """Add a new customer to the database"""
-    session = Session()
+    token = str(request.authorization).split(" ")[-1]
+    token_check = jwt_decode(token)
 
+    if not token_check:
+        error_msg = "Login required for insert operation"
+        return {"error": error_msg}, 403
+
+    session = Session()
     customer = Customer(name=body.name, email=body.email)
 
     try:
         session.add(customer)
         session.commit()
     except Exception as err:
-        print(err)
+        error_msg = f"error msg: {err}"
+        logger.warning(f"Error to add new customer. {error_msg}")
         return {"error": "Customer not added"}, 500
+
     return {"message": f"Customer added with ID {customer.id}."}, 200
 
 
-@customer_bp.delete("/customers/<id>", responses={"200": MessageSchema})
+@customer_bp.delete(
+    "/customers/<id>", responses={"200": MessageSchema}, security=security
+)
 def remove_customer_by_id(path: IdPathSchema):
     """Remove customer by the ID from the database"""
+    token = str(request.authorization).split(" ")[-1]
+    token_check = jwt_decode(token)
+
+    if not token_check:
+        error_msg = "Login required for remove operation"
+        return {"error": error_msg}, 403
+
     session = Session()
     customer_id = path.id
     customer_query = session.query(Customer).filter(Customer.id == customer_id)

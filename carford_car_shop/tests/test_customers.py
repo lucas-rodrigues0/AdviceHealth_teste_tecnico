@@ -27,9 +27,12 @@ class TestCustomer:
         assert customer["id"] == 1
         assert "cars" in customer
 
-    def test_add_customer_route(self, client):
+    def test_add_customer_route(self, client, token_jwt):
+        header = {"Authorization": f"Bearer {token_jwt}"}
         response = client.post(
-            "/api/customers", json={"name": "Lucas", "email": "mymail@email.com"}
+            "/api/customers",
+            headers=header,
+            json={"name": "Lucas", "email": "mymail@email.com"},
         )
         response_data = json.loads(response.data.decode("utf-8"))
 
@@ -37,8 +40,9 @@ class TestCustomer:
         assert "message" in response_data
         assert "Customer added" in response_data["message"]
 
-    def test_remove_customer_route(self, client):
-        response = client.delete("/api/customers/5")
+    def test_remove_customer_route(self, client, token_jwt):
+        header = {"Authorization": f"Bearer {token_jwt}"}
+        response = client.delete("/api/customers/5", headers=header)
         response_data = json.loads(response.data.decode("utf-8"))
 
         assert response.status_code == 200
@@ -64,15 +68,19 @@ class TestCustomer:
         assert "message" in response_data
         assert response_data["message"] == "Customer of ID 99 not found."
 
-    def test_not_add_customer_error_response(self, client):
+    def test_not_add_customer_error_response(self, client, token_jwt):
+        header = {"Authorization": f"Bearer {token_jwt}"}
         response = client.post(
-            "/api/customers", json={"name": 2, "email": "mymail@email.com"}
+            "/api/customers",
+            headers=header,
+            json={"name": 2, "email": "mymail@email.com"},
         )
 
         assert response.status_code != 200
 
-    def test_not_remove_customer_not_found(self, client):
-        response = client.delete("/api/customers/99")
+    def test_not_remove_customer_not_found(self, client, token_jwt):
+        header = {"Authorization": f"Bearer {token_jwt}"}
+        response = client.delete("/api/customers/99", headers=header)
         response_data = json.loads(response.data.decode("utf-8"))
 
         assert response.status_code == 404

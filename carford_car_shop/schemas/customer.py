@@ -15,12 +15,6 @@ class CustomerQuerySchema(BaseModel):
     buyers: Optional[str] = None
 
 
-class IdPathSchema(BaseModel):
-    """Schema representation for the request path ID"""
-
-    id: str
-
-
 class CustomerCars(BaseModel):
     """Schema representation for the data in Customer cars field"""
 
@@ -43,9 +37,3 @@ class CustomerResponseSchema(BaseModel):
     """Schema representation for the Customer response"""
 
     customers: List[CustomerSchema]
-
-
-class MessageSchema(BaseModel):
-    """Schema representation for the message response"""
-
-    message: str

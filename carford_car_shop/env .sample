@@ -1,0 +1,16 @@
+API_PORT=5000
+DEBUG=True
+
+JWT_SECRET="MySecretJWT"
+
+DB_DEV_PATH='database/'
+DB_TEST_PATH=':memory:'
+# TESTING=True
+# DEV=True
+
+
+PG_DATABASE=car_shop
+PG_USER=postgres
+PG_PASSWORD=postgres
+PG_HOST=db
+PG_PORT=5432

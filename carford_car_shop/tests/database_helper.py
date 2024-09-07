@@ -1,9 +1,11 @@
-from models import Customer, Car, ModelEnum, ColorEnum, Session
+from models import Customer, Car, User, ModelEnum, ColorEnum, Session
 
 
 def seed_database():
     """Insert some data for development and testing"""
     session = Session()
+
+    user = User(username="Admin", password="Admin", email="admin@mail.com")
 
     customer1 = Customer(name="Joao Silva", email="joaomail@email.com")
     customer2 = Customer(name="Helena Castro", email="hcastro@email.com")
@@ -16,6 +18,7 @@ def seed_database():
     car5 = Car(model=ModelEnum.sedan, color=ColorEnum.gray, owner=customer4)
 
     try:
+        session.add(user)
         session.add(customer1)
         session.add(customer2)
         session.add(customer3)
@@ -29,6 +32,6 @@ def seed_database():
         session.add(car5)
 
         session.commit()
-
+        print("Database seeded!")
     except Exception as err:
         print(err)
