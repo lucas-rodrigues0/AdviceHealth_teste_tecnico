@@ -95,8 +95,8 @@ Estrutura de diretório:
 
 O arquivo `env.sample` contem as variáveis necessárias para o sistema.
 
-[!IMPORTANT] 
-criar um arquivo `.env` contendo as variáveis indicadas. As varáveis 'TESTING', e 'DEV', só devem existir se for necessário usar o SQLite.
+> [!IMPORTANT]
+Criar um arquivo `.env` contendo as variáveis indicadas. As varáveis 'TESTING', e 'DEV', só devem existir se for necessário usar o SQLite.
 Caso contrário não incluir elas. Para os teste passamos essa variavel pelo comando.
 
 As variáveis API_PORT e DEBUG são opcionais para o desenvolvimento. No App é sugerido utilizar a porta 5000, mas caso queira trocar, alterar esse valor pela  variável é possível, mas será necessário alterar as portas no Dockerfile e docker-compose para as portas serem expostas corretamente.
