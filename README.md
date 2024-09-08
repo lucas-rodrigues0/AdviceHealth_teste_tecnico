@@ -12,6 +12,9 @@ Teste técnico realizado para processo seletivo.
 - [Configuração e Instalação](#configuração-e-instalação)
 	- [Utilizando o Docker compose](#utilizando-o-docker-compose)
 	- [Utilizando somente o Docker](#utilizando-somente-o-docker)
+	- [Utilizando o SQLite](#utilizando-o-sqlite)
+	- [Rodando os teste unitário com Pytest](#rodando-os-teste-unitário-com-pytest)
+	- [Rodando localmente](#rodando-localmente)
 - [Endpoints](#endpoints)
 
 
