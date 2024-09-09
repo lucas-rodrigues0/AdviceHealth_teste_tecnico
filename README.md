@@ -201,4 +201,23 @@ http://127.0.0.1:5000/docs
 ```
 
 São apresentadas as opção de documentação `swagger`, `redoc` e `rapidoc`.  
-Atraves delas é possivel testar e entender as rotas e suas especificações. 
+Atraves delas é possivel testar e entender as rotas e suas especificações.  
+
+Para inserir alguns dados no database para teste acessar a rota `/seed`. Irá inserir dados de User, Customer e Car para a finalidade de testes manuais.
+```
+http://127.0.0.1:5000/seed
+```
+
+os endpoints existentes são:
+
+- POST /login
+- POST /login/register
+- GET /customers
+- GET /customers?buyers=true
+- GET /customers/<id>
+- POST /customers
+- DELETE /customers/<id>
+- GET /cars
+- GET /cars/<id>
+- POST /cars
+- DELETE /cars/<id>
